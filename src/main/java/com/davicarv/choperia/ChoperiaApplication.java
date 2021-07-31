@@ -12,13 +12,17 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.davicarv.choperia.domain.Barril;
 import com.davicarv.choperia.domain.Cliente;
 import com.davicarv.choperia.domain.Endereco;
+import com.davicarv.choperia.domain.Equipamento;
 import com.davicarv.choperia.domain.Funcionario;
 import com.davicarv.choperia.domain.MarcaBarrilEnum;
+import com.davicarv.choperia.domain.OrdemServico;
+import com.davicarv.choperia.domain.StatusEquipamentoEnum;
 import com.davicarv.choperia.domain.Telefone;
 import com.davicarv.choperia.domain.TipoPessoa;
 import com.davicarv.choperia.domain.Usuario;
 import com.davicarv.choperia.repository.BarrilRepository;
 import com.davicarv.choperia.repository.ClienteRepository;
+import com.davicarv.choperia.repository.EquipamentoRepository;
 import com.davicarv.choperia.repository.FuncionarioRepository;
 
 @SpringBootApplication
@@ -30,6 +34,8 @@ public class ChoperiaApplication implements CommandLineRunner {
 	private ClienteRepository clienteRepo;
 	@Autowired
 	private FuncionarioRepository funcionarioRepo;
+	@Autowired
+	private EquipamentoRepository equipamentoRepo;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ChoperiaApplication.class, args);
@@ -130,5 +136,14 @@ public class ChoperiaApplication implements CommandLineRunner {
 		f1.setSalario(1500);
 		funcionarioRepo.save(f1);
 		
+		//Equipamento 
+		Equipamento equipamento = new Equipamento();
+		equipamento.setCodigoInterno("STRV2");
+		equipamento.setStatus(StatusEquipamentoEnum.DISPONIVEL);
+		equipamento.setValorComodato(6000);
+		equipamento.setValorVenda(3999);
+		equipamento.setDescricao("Chopeira 110v");
+		
+		equipamentoRepo.save(equipamento);
 	}
 }
