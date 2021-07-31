@@ -22,34 +22,34 @@ import com.davicarv.choperia.service.OrdemServicoService;
 public class OrdemServicoController {
 	@Autowired
 	private OrdemServicoService service;
-	
+
 	@GetMapping
 	public ResponseEntity getAll() {
 		return ResponseEntity.status(HttpStatus.OK).body(service.findAll());
 	}
-	
+
 	@GetMapping(path = "/{id}")
 	public ResponseEntity getOne(@PathVariable("id") Long id) {
 		return ResponseEntity.ok(service.findById(id));
 	}
-	
+
 	@PostMapping
 	public ResponseEntity save(@Valid @RequestBody OrdemServico ordemServico) {
 		ordemServico.setId((Long) null);
 		service.save(ordemServico);
-		
+
 		return ResponseEntity.status(HttpStatus.CREATED).body(ordemServico);
 	}
-	
+
 	@PutMapping("/{id}")
 	public ResponseEntity update(@PathVariable("id") Long id, @Valid @RequestBody OrdemServico ordemServico) {
 		ordemServico.setId(id);
 		service.update(ordemServico);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
-	
+
 	@DeleteMapping("/{id}")
-	public ResponseEntity delete(@PathVariable("id") Long id){
+	public ResponseEntity delete(@PathVariable("id") Long id) {
 		service.delete(id);
 		return ResponseEntity.ok().build();
 	}

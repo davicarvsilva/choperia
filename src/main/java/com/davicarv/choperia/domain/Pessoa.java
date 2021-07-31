@@ -30,42 +30,42 @@ import com.sun.istack.NotNull;
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Pessoa implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(nullable = false, length = 50)
 	@Size(min = 2, max = 50, message = "nome deve ter entre 2 e 50 caracteres")
 	@NotBlank
-	private String nome; 
-	
+	private String nome;
+
 	@Column(nullable = false, length = 50)
 	@Size(min = 2, max = 50, message = "sobrenome deve ter entre 2 e 50 caracteres")
 	@NotBlank
 	private String sobrenome;
-	
+
 	@Column(nullable = false)
 	private Calendar dataNascimento;
-	
+
 	@Column(nullable = false, unique = true)
 	@Email
 	@NotBlank
 	@Size(min = 2, max = 50, message = "email deve ter entre 2 e 50 caracteres")
 	private String email;
-	
+
 	@Column(nullable = false)
 	@Enumerated(EnumType.ORDINAL)
 	private TipoPessoa cpfOuCnpj;
-	
+
 	@Size(min = 1)
 	@ElementCollection()
 	private List<Telefone> telefones = new ArrayList<>();
-	
+
 	@Size(min = 1)
 	@ElementCollection()
 	private List<Endereco> enderecos = new ArrayList<>();
-	
+
 	@NotNull
 	@OneToOne(cascade = CascadeType.ALL)
 	private Usuario usuario;
@@ -80,59 +80,75 @@ public abstract class Pessoa implements Serializable {
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public String getNome() {
 		return nome;
 	}
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
 	public String getSobrenome() {
 		return sobrenome;
 	}
+
 	public void setSobrenome(String sobrenome) {
 		this.sobrenome = sobrenome;
 	}
+
 	public Calendar getDataNascimento() {
 		return dataNascimento;
 	}
+
 	public void setDataNascimento(Calendar dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	public TipoPessoa getCpfOuCnpj() {
 		return cpfOuCnpj;
 	}
+
 	public void setCpfOuCnpj(TipoPessoa cpfOuCnpj) {
 		this.cpfOuCnpj = cpfOuCnpj;
 	}
+
 	public List<Telefone> getTelefones() {
 		return telefones;
 	}
+
 	public void setTelefones(List<Telefone> telefones) {
 		this.telefones = telefones;
 	}
+
 	public List<Endereco> getEnderecos() {
 		return enderecos;
 	}
+
 	public void setEnderecos(List<Endereco> enderecos) {
 		this.enderecos = enderecos;
 	}
-	
+
 	public Usuario getUsuario() {
 		return usuario;
 	}
+
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -140,6 +156,7 @@ public abstract class Pessoa implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

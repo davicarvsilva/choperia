@@ -14,10 +14,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class Cliente extends Pessoa {
 	@Column(nullable = true, length = 100)
-	@Size(max=100, message = "documentação não pode ter mais de 100 caracteres")
+	@Size(max = 100, message = "documentação não pode ter mais de 100 caracteres")
 	@NotBlank
 	private String documentacao;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "cliente")
 	private List<OrdemServico> ordensServico = new ArrayList<>();

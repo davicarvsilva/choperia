@@ -16,50 +16,50 @@ import com.davicarv.choperia.domain.Funcionario;
 import com.davicarv.choperia.service.FuncionarioService;
 
 @Controller
-@RequestMapping(path="/funcionarios")
+@RequestMapping(path = "/funcionarios")
 public class FuncionarioViewController {
 	@Autowired
 	private FuncionarioService service;
-	
+
 	@GetMapping
 	public String getAll(Model model) {
-		model.addAttribute("funcionarios", service.findAll()); 
+		model.addAttribute("funcionarios", service.findAll());
 		return "funcionarios";
 	}
-	
+
 	@GetMapping(path = "/cadastro")
 	public String cadastro(Model model) {
 		model.addAttribute("funcionarios", new Funcionario());
 		return "formfuncionario";
 	}
-	
-	@GetMapping(path="/save")
+
+	@GetMapping(path = "/save")
 	public String save(@Valid @ModelAttribute Funcionario funcionario, BindingResult result, Model model) {
-		if(result.hasErrors()) {
+		if (result.hasErrors()) {
 			model.addAttribute("msgErros", result.getFieldErrors());
-			
+
 		}
 		funcionario.setId(null);
 		try {
 			service.save(funcionario);
-		}catch (Exception e) {
+		} catch (Exception e) {
 			model.addAttribute("msgErros", new ObjectError("funcionario", e.getMessage()));
-			
+
 			return "formfuncionario";
 		}
-		
+
 		model.addAttribute("msgSucesso", "funcionario cadastrado com sucesso");
 		model.addAttribute("funcionario", new Funcionario());
 		return "formfuncionario";
 	}
-	
+
 	@GetMapping(path = "/alterar")
 	public String alterar(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("funcionario", service.findById(id));
 		return "formFuncionario";
 	}
-	
-	@GetMapping(path="/{id}/deletar")
+
+	@GetMapping(path = "/{id}/deletar")
 	public String deletar(@PathVariable("id") Long id) {
 		service.delete(id);
 		return "redirect:/funcionarios";

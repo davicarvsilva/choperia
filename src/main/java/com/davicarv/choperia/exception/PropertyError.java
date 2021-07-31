@@ -4,10 +4,10 @@ import java.io.Serializable;
 
 public class PropertyError implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	private String field;
 	private String message;
-	
+
 	public PropertyError(String field, String message) {
 		super();
 		this.field = field;

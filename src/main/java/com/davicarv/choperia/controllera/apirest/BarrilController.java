@@ -24,34 +24,34 @@ import com.davicarv.choperia.service.BarrilService;
 public class BarrilController {
 	@Autowired
 	private BarrilService service;
-	
+
 	@GetMapping
 	public ResponseEntity getAll() {
 		return ResponseEntity.status(HttpStatus.OK).body(service.findAll());
 	}
-	
+
 	@GetMapping(path = "/{id}")
 	public ResponseEntity getOne(@PathVariable("id") Long id) {
 		return ResponseEntity.ok(service.findById(id));
 	}
-	
+
 	@PostMapping
 	public ResponseEntity save(@Valid @RequestBody Barril barril) {
 		barril.setId(null);
 		service.save(barril);
-		
+
 		return ResponseEntity.status(HttpStatus.CREATED).body(barril);
 	}
-	
+
 	@PutMapping("/{id}")
 	public ResponseEntity update(@PathVariable("id") Long id, @Valid @RequestBody Barril barril) {
 		barril.setId(id);
 		service.update(barril);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
-	
+
 	@DeleteMapping("/{id}")
-	public ResponseEntity delete(@PathVariable("id") Long id){
+	public ResponseEntity delete(@PathVariable("id") Long id) {
 		service.delete(id);
 		return ResponseEntity.ok().build();
 	}

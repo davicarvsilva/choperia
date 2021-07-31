@@ -16,50 +16,50 @@ import com.davicarv.choperia.domain.Equipamento;
 import com.davicarv.choperia.service.EquipamentoService;
 
 @Controller
-@RequestMapping(path="/equipamentos")
+@RequestMapping(path = "/equipamentos")
 public class EquipamentoViewController {
 	@Autowired
 	private EquipamentoService service;
-	
+
 	@GetMapping
 	public String getAll(Model model) {
-		model.addAttribute("equipamentos", service.findAll()); 
+		model.addAttribute("equipamentos", service.findAll());
 		return "equipamentos";
 	}
-	
+
 	@GetMapping(path = "/cadastro")
 	public String cadastro(Model model) {
 		model.addAttribute("equipamentos", new Equipamento());
 		return "formequipamento";
 	}
-	
-	@GetMapping(path="/save")
+
+	@GetMapping(path = "/save")
 	public String save(@Valid @ModelAttribute Equipamento equipamento, BindingResult result, Model model) {
-		if(result.hasErrors()) {
+		if (result.hasErrors()) {
 			model.addAttribute("msgErros", result.getFieldErrors());
-			
+
 		}
 		equipamento.setId(null);
 		try {
 			service.save(equipamento);
-		}catch (Exception e) {
+		} catch (Exception e) {
 			model.addAttribute("msgErros", new ObjectError("equipamento", e.getMessage()));
-			
+
 			return "formequipamento";
 		}
-		
+
 		model.addAttribute("msgSucesso", "Equipamento cadastrado com sucesso");
 		model.addAttribute("equipamento", new Equipamento());
 		return "formequipamento";
 	}
-	
+
 	@GetMapping(path = "/alterar")
 	public String alterar(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("equipamento", service.findById(id));
 		return "formEquipamento";
 	}
-	
-	@GetMapping(path="/{id}/deletar")
+
+	@GetMapping(path = "/{id}/deletar")
 	public String deletar(@PathVariable("id") Long id) {
 		service.delete(id);
 		return "redirect:/equipamentos";

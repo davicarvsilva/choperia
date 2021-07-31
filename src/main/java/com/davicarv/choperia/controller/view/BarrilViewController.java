@@ -17,50 +17,50 @@ import com.davicarv.choperia.domain.Barril;
 import com.davicarv.choperia.service.BarrilService;
 
 @Controller
-@RequestMapping(path="/barris")
+@RequestMapping(path = "/barris")
 public class BarrilViewController {
 	@Autowired
 	private BarrilService service;
-	
+
 	@GetMapping
 	public String getAll(Model model) {
-		model.addAttribute("barris", service.findAll()); 
+		model.addAttribute("barris", service.findAll());
 		return "barris";
 	}
-	
+
 	@GetMapping(path = "/cadastro")
 	public String cadastro(Model model) {
 		model.addAttribute("barris", new Barril());
 		return "formBarril";
 	}
-	
-	@GetMapping(path="/save")
+
+	@GetMapping(path = "/save")
 	public String save(@Valid @ModelAttribute Barril barril, BindingResult result, Model model) {
-		if(result.hasErrors()) {
+		if (result.hasErrors()) {
 			model.addAttribute("msgErros", result.getFieldErrors());
-			
+
 		}
 		barril.setId(null);
 		try {
 			service.save(barril);
-		}catch (Exception e) {
+		} catch (Exception e) {
 			model.addAttribute("msgErros", new ObjectError("Barril", e.getMessage()));
-			
+
 			return "formBarril";
 		}
-		
+
 		model.addAttribute("msgSucesso", "Barril cadastrado com sucesso");
 		model.addAttribute("barril", new Barril());
 		return "formBarril";
 	}
-	
+
 	@GetMapping(path = "/alterar")
 	public String alterar(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("barril", service.findById(id));
 		return "formBarril";
 	}
-	
-	@GetMapping(path="/{id}/deletar")
+
+	@GetMapping(path = "/{id}/deletar")
 	public String deletar(@PathVariable("id") Long id) {
 		service.delete(id);
 		return "redirect:/barris";

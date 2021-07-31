@@ -11,43 +11,48 @@ import javax.validation.constraints.Size;
 @Embeddable
 public class Telefone implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Column(nullable = true, length = 2)
-	@Size(min=2, max = 2, message = "codigo precisa ter 2 caracteres")
+	@Size(min = 2, max = 2, message = "codigo precisa ter 2 caracteres")
 	@Pattern(regexp = "^[0-9]*$")
 	@NotBlank
 	private String codigoPais;
-	
+
 	@Column(nullable = false, length = 2)
-	@Size(min=2, max = 2, message = "codigo precisa ter 2 caracteres")
+	@Size(min = 2, max = 2, message = "codigo precisa ter 2 caracteres")
 	@Pattern(regexp = "^[0-9]*$")
 	@NotBlank
 	private String ddd;
-	
+
 	@Column(nullable = false, length = 10)
-	@Size(min=8, max = 10, message = "codigo precisa ter 10 caracteres")
+	@Size(min = 8, max = 10, message = "codigo precisa ter 10 caracteres")
 	@NotBlank
-	private String numero; 
-	
+	private String numero;
+
 	public String getCodigoPais() {
 		return codigoPais;
 	}
+
 	public void setCodigoPais(String codigoPais) {
 		this.codigoPais = codigoPais;
 	}
+
 	public String getDdd() {
 		return ddd;
 	}
+
 	public void setDdd(String ddd) {
 		this.ddd = ddd;
 	}
+
 	public String getNumero() {
 		return numero;
 	}
+
 	public void setNumero(String numero) {
 		this.numero = numero;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -57,7 +62,7 @@ public class Telefone implements Serializable {
 		result = prime * result + ((numero == null) ? 0 : numero.hashCode());
 		return result;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -84,6 +89,5 @@ public class Telefone implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
+
 }

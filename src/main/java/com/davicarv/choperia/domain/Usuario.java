@@ -14,24 +14,26 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Entity
-public class Usuario implements Serializable{
+public class Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(nullable = false, unique = true, length = 50)
-	@Size(min = 1, max = 50, message="nome do usuario deve ter entre 1 e 50 caracteres")
+	@Size(min = 1, max = 50, message = "nome do usuario deve ter entre 1 e 50 caracteres")
 	@NotBlank
 	private String nomeUsuario;
-	
+
 	@Column(nullable = false, length = 30)
-	@Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&-+=()])(?=\\S+$).{8, 20}$") // Validação da restrição de senha
-	@Max(value = 30, message="senha precisa ter no máximo 30 caracteres")
+	@Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&-+=()])(?=\\S+$).{8, 20}$") // Validação da
+																									// restrição de
+																									// senha
+	@Max(value = 30, message = "senha precisa ter no máximo 30 caracteres")
 	@NotBlank
 	private String senha;
-	
+
 	@OneToOne(mappedBy = "usuario")
 	private Pessoa pessoa;
 
@@ -66,7 +68,7 @@ public class Usuario implements Serializable{
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", nomeUsuario=" + nomeUsuario + ", senha=" + senha + ", pessoa=" + pessoa + "]";

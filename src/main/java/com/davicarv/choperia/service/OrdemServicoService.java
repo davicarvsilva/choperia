@@ -14,48 +14,44 @@ import com.davicarv.choperia.repository.OrdemServicoRepository;
 public class OrdemServicoService {
 	@Autowired
 	private OrdemServicoRepository repo;
-	
-	public List<OrdemServico> findAll(){
+
+	public List<OrdemServico> findAll() {
 		return repo.findAll();
 	}
-	
-	public OrdemServico findById(Long id){
+
+	public OrdemServico findById(Long id) {
 		Optional<OrdemServico> result = repo.findById(id);
-		if(result.isEmpty()) {
+		if (result.isEmpty()) {
 			throw new RuntimeException("Ordem de Serviço não encontrado");
-		}
-		else {
-			return result.get(); 
+		} else {
+			return result.get();
 		}
 	}
-	
+
 	public OrdemServico save(OrdemServico b) {
 		try {
 			return repo.save(b);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			throw new RuntimeException("falha ao salvar Ordem de Serviço");
 		}
 	}
-	
+
 	public OrdemServico update(OrdemServico b) {
 		OrdemServico obj = findById(b.getId());
 		try {
 			return repo.save(b);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			throw new RuntimeException("Falha ao salvar Ordem de Serviço");
 		}
 	}
-	
+
 	public void delete(Long id) {
 		OrdemServico obj = findById(id);
 		try {
 			repo.delete(obj);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			throw new RuntimeException("Falha ao apagar ordem de serviço");
 		}
-		
+
 	}
 }

@@ -22,34 +22,34 @@ import com.davicarv.choperia.service.FuncionarioService;
 public class FuncionarioController {
 	@Autowired
 	private FuncionarioService service;
-	
+
 	@GetMapping
 	public ResponseEntity getAll() {
 		return ResponseEntity.status(HttpStatus.OK).body(service.findAll());
 	}
-	
+
 	@GetMapping(path = "/{id}")
 	public ResponseEntity getOne(@PathVariable("id") Long id) {
 		return ResponseEntity.ok(service.findById(id));
 	}
-	
+
 	@PostMapping
 	public ResponseEntity save(@Valid @RequestBody Funcionario funcionario) {
 		funcionario.setId((Long) null);
 		service.save(funcionario);
-		
+
 		return ResponseEntity.status(HttpStatus.CREATED).body(funcionario);
 	}
-	
+
 	@PutMapping("/{id}")
 	public ResponseEntity update(@PathVariable("id") Long id, @Valid @RequestBody Funcionario funcionario) {
 		funcionario.setId(id);
 		service.update(funcionario);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
-	
+
 	@DeleteMapping("/{id}")
-	public ResponseEntity delete(@PathVariable("id") Long id){
+	public ResponseEntity delete(@PathVariable("id") Long id) {
 		service.delete(id);
 		return ResponseEntity.ok().build();
 	}

@@ -1,4 +1,5 @@
 package com.davicarv.choperia.domain;
+
 import java.io.Serializable;
 import java.util.Calendar;
 
@@ -17,43 +18,43 @@ import javax.validation.constraints.Positive;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class Barril implements Serializable{
+public class Barril implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Column(nullable = false)
 	@Positive
-	@Min(value=10, message = "tamanho não pode ser menor que 10")
-	@Max(value=50, message = "tamanho não pode ser maior que 50")
+	@Min(value = 10, message = "tamanho não pode ser menor que 10")
+	@Max(value = 50, message = "tamanho não pode ser maior que 50")
 	private Integer tamanho;
-	
+
 	@Column(nullable = false)
 	@Enumerated(EnumType.ORDINAL)
 	private MarcaBarrilEnum marca;
-	
+
 	@Column(nullable = false)
 	private Calendar fabricacao;
-	
+
 	@Column(nullable = false)
 	private Calendar validade;
-	
+
 	@Column(nullable = false)
 	@Positive
 	@Min(value = 10, message = "preço não pode ser menor que R$ 10,00")
-	@Max(value=3000, message = "preço não pode ser maior que R$ 3000")
+	@Max(value = 3000, message = "preço não pode ser maior que R$ 3000")
 	private double preco;
 
 	@JsonIgnore
 	@ManyToOne
 	private OrdemServico ordemServico;
-	
+
 	public Long getId() {
 		return id;
 	}
 
-	public void setId (Long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -118,6 +119,7 @@ public class Barril implements Serializable{
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -135,5 +137,3 @@ public class Barril implements Serializable{
 		return true;
 	}
 }
-
-

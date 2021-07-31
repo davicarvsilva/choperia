@@ -1,8 +1,5 @@
 package com.davicarv.choperia.domain;
 
 public enum StatusOrdemServico {
-	CONFIRMADO, 
-	ENTREGUE, 
-	RECOLHIDO, 
-	CANCELADO;
+	CONFIRMADO, ENTREGUE, RECOLHIDO, CANCELADO;
 }

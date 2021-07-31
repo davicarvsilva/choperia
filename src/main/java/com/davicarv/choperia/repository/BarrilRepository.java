@@ -11,6 +11,6 @@ import com.davicarv.choperia.domain.Barril;
 @Repository
 public interface BarrilRepository extends JpaRepository<Barril, Long> {
 	public List<Barril> findByTamanho(int tamanho);
-	//public List<Barril> findByMarcaBarrilEnum(int marcaBarrilEnum);
+	public List<Barril> findByMarca(int marcaBarrilEnum);
 	public List<Barril> findByValidade(Calendar validade);
 }

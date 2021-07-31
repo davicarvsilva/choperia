@@ -22,34 +22,34 @@ import com.davicarv.choperia.service.EquipamentoService;
 public class EquipamentoController {
 	@Autowired
 	private EquipamentoService service;
-	
+
 	@GetMapping
 	public ResponseEntity getAll() {
 		return ResponseEntity.status(HttpStatus.OK).body(service.findAll());
 	}
-	
+
 	@GetMapping(path = "/{id}")
 	public ResponseEntity getOne(@PathVariable("id") Long id) {
 		return ResponseEntity.ok(service.findById(id));
 	}
-	
+
 	@PostMapping
 	public ResponseEntity save(@Valid @RequestBody Equipamento equipamento) {
 		equipamento.setId((Long) null);
 		service.save(equipamento);
-		
+
 		return ResponseEntity.status(HttpStatus.CREATED).body(equipamento);
 	}
-	
+
 	@PutMapping("/{id}")
 	public ResponseEntity update(@PathVariable("id") Long id, @Valid @RequestBody Equipamento equipamento) {
 		equipamento.setId(id);
 		service.update(equipamento);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
-	
+
 	@DeleteMapping("/{id}")
-	public ResponseEntity delete(@PathVariable("id") Long id){
+	public ResponseEntity delete(@PathVariable("id") Long id) {
 		service.delete(id);
 		return ResponseEntity.ok().build();
 	}
