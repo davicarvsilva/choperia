@@ -9,17 +9,19 @@ import javax.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import com.davicarv.choperia.exception.PropertyError;
 import com.davicarv.choperia.exception.ValidationError;
+import com.davicarv.choperia.exception.Error;
 
+//Classe de escuta das excessões geradas pelos Controllers
 @RestControllerAdvice
 public class MyRestControllerAdvice {
 
-	@ExceptionHandler(ConstraintViolationException.class)
+	@ExceptionHandler(ConstraintViolationException.class)	
 	public ResponseEntity erroValidacao(ConstraintViolationException e, HttpServletRequest request) {
 		ValidationError error = new ValidationError(Calendar.getInstance(), HttpStatus.UNPROCESSABLE_ENTITY.value(),
 				HttpStatus.UNPROCESSABLE_ENTITY.name(), e.getMessage(), request.getRequestURI());
@@ -47,9 +49,14 @@ public class MyRestControllerAdvice {
 
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity erroPadrao(Exception e, HttpServletRequest request) {
-		ValidationError error = new ValidationError(Calendar.getInstance(), HttpStatus.UNPROCESSABLE_ENTITY.value(),
-				HttpStatus.UNPROCESSABLE_ENTITY.name(), e.getMessage(), request.getRequestURI());
+		
+		Error error = new Error(
+			Calendar.getInstance(), 
+			HttpStatus.BAD_REQUEST.value(), 
+			HttpStatus.BAD_REQUEST.name(),
+			e.getMessage(),
+			request.getRequestURI());
 
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
 	}
 }
