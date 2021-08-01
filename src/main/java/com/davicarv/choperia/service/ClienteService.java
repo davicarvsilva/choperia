@@ -41,8 +41,9 @@ public class ClienteService {
 	}
 
 	public Cliente update(Cliente b) {
-		//Cliente obj = findById(b.getId());
+		Cliente obj = findById(b.getId());
 		try {
+			b.setCpfCnpj(obj.getCpfCnpj());
 			return repo.save(b);
 		} catch (Exception e) {
 			throw new RuntimeException("Falha ao salvar cliente");

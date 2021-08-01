@@ -39,8 +39,9 @@ public class FuncionarioService {
 	}
 
 	public Funcionario update(Funcionario b) {
-		//Funcionario obj = findById(b.getId());
+		Funcionario obj = findById(b.getId());
 		try {
+			b.setCpfCnpj(obj.getCpfCnpj());
 			return repo.save(b);
 		} catch (Exception e) {
 			throw new RuntimeException("Falha ao atualizar funcionário");
