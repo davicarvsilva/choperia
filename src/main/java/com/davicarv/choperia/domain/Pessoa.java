@@ -25,10 +25,12 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.NotNull;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@JsonIgnoreProperties(value = "senha", allowGetters = false, allowSetters = true)
 public abstract class Pessoa implements Serializable {
 	private static final long serialVersionUID = 1L;
 
