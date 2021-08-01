@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.davicarv.choperia.domain.Cliente;
 import com.davicarv.choperia.domain.Funcionario;
+import com.davicarv.choperia.domain.Pessoa;
 import com.davicarv.choperia.repository.FuncionarioRepository;
 
 @Service
@@ -29,10 +30,12 @@ public class FuncionarioService {
 	}
 
 	public Funcionario save(Funcionario b) {
+		verificaEmailCadastrado(b.getEmail());
+		
 		try {
 			return repo.save(b);
 		} catch (Exception e) {
-			throw new RuntimeException("falha ao salvar funcionário");
+			throw new RuntimeException("Falha ao salvar funcionário");
 		}
 	}
 
@@ -41,7 +44,7 @@ public class FuncionarioService {
 		try {
 			return repo.save(b);
 		} catch (Exception e) {
-			throw new RuntimeException("Falha ao salvar funcionário");
+			throw new RuntimeException("Falha ao atualizar funcionário");
 		}
 	}
 
@@ -53,6 +56,9 @@ public class FuncionarioService {
 			} catch (Exception e) {
 				throw new RuntimeException("Falha ao apagar funcionário");
 			}
+		}
+		else {
+			throw new RuntimeException("Funcionário está ligado à Ordem de Serviço");
 		}
 	}
 
@@ -67,7 +73,7 @@ public class FuncionarioService {
 			funcionario.setEmail(funcionario.getEmail());
 			return repo.save(funcionario);
 		} catch (Exception e) {
-			throw new RuntimeException("Falha ao atualizar o Cliente ");
+			throw new RuntimeException("Falha ao atualizar funcionário ");
 		}
 	}
 
@@ -81,6 +87,13 @@ public class FuncionarioService {
 			}
 
 			obj.getUsuario().setSenha(novaSenha);
+		}
+	}
+	
+	private void verificaEmailCadastrado(String email) {
+		List<Pessoa> listaPessoas = repo.findByEmail(email);
+		if(!listaPessoas.isEmpty()) {
+			throw new RuntimeException("Email já cadastrado");
 		}
 	}
 }

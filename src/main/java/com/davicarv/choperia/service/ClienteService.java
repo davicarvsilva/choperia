@@ -3,11 +3,18 @@ package com.davicarv.choperia.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.management.RuntimeErrorException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.davicarv.choperia.domain.Cliente;
+import com.davicarv.choperia.domain.Pessoa;
 import com.davicarv.choperia.repository.ClienteRepository;
+import com.mysql.cj.xdevapi.Result;
+
+import jdk.jfr.events.ErrorThrownEvent;
 
 @Service
 public class ClienteService {
@@ -27,7 +34,9 @@ public class ClienteService {
 		}
 	}
 
-	public Cliente save(Cliente b) {
+	public Cliente save(Cliente b, MultipartFile file) {
+		verificaEmailCadastrado(b.getEmail());
+		
 		try {
 			return repo.save(b);
 		} catch (Exception e) {
@@ -52,6 +61,9 @@ public class ClienteService {
 			} catch (Exception e) {
 				throw new RuntimeException("Falha ao apagar cliente");
 			}
+		}
+		else {
+			throw new RuntimeException("Cliente está ligado à Ordem de Serviço");
 		}
 	}
 
@@ -82,4 +94,20 @@ public class ClienteService {
 			obj.getUsuario().setSenha(novaSenha);
 		}
 	}
+	
+	private void verificaEmailCadastrado(String email) {
+		List<Pessoa> listaPessoas = repo.findByEmail(email);
+		if(!listaPessoas.isEmpty()) {
+			throw new RuntimeException("Email já cadastrado");
+		}
+	}
+	
+	/*
+	private void salvarArquivo(MultipartFile file, String novoNome) {
+		if(file.getContentType().equals(MediaType.APPLICATION_PDF_VALUE	)) {
+			Path dest = Paths.get("uploads", novoNome);
+			file.transferTo(dest);
+		}
+	}
+	*/
 }

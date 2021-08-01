@@ -6,8 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.davicarv.choperia.domain.Funcionario;
+import com.davicarv.choperia.domain.Equipamento;
 import com.davicarv.choperia.domain.OrdemServico;
+import com.davicarv.choperia.domain.StatusEquipamentoEnum;
 import com.davicarv.choperia.repository.OrdemServicoRepository;
 
 @Service
@@ -28,18 +29,25 @@ public class OrdemServicoService {
 		}
 	}
 
-	public OrdemServico save(OrdemServico b) {
+	public OrdemServico save(OrdemServico os) {
+		List<Equipamento> listaEquipamentos = os.getEquipamentos();
+		verificaStatusEquipamento(listaEquipamentos);
+		
 		try {
-			return repo.save(b);
+			return repo.save(os);
 		} catch (Exception e) {
 			throw new RuntimeException("falha ao salvar Ordem de Serviço");
 		}
 	}
 
-	public OrdemServico update(OrdemServico b) {
-		OrdemServico obj = findById(b.getId());
+	public OrdemServico update(OrdemServico os) {
+		OrdemServico obj = findById(os.getId());
+		
+		List<Equipamento> listaEquipamentos = obj.getEquipamentos();
+		verificaStatusEquipamento(listaEquipamentos);
+		
 		try {
-			return repo.save(b);
+			return repo.save(os);
 		} catch (Exception e) {
 			throw new RuntimeException("Falha ao salvar Ordem de Serviço");
 		}
@@ -52,6 +60,13 @@ public class OrdemServicoService {
 		} catch (Exception e) {
 			throw new RuntimeException("Falha ao apagar ordem de serviço");
 		}
-
+	}
+	
+	private void verificaStatusEquipamento(List<Equipamento> listaEquipamentos) {
+		for (Equipamento equipamento : listaEquipamentos) {
+			if(equipamento.getStatus() == StatusEquipamentoEnum.ALOCADO) {
+				throw new RuntimeException("Um dos equipamentos escolhidos já está alocado");
+			}
+		}
 	}
 }

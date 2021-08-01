@@ -31,7 +31,7 @@ public class EquipamentoService {
 		try {
 			return repo.save(b);
 		} catch (Exception e) {
-			throw new RuntimeException("falha ao salvar Equipamento");
+			throw new RuntimeException("falha ao salvar equipamento");
 		}
 	}
 
@@ -40,7 +40,7 @@ public class EquipamentoService {
 		try {
 			return repo.save(b);
 		} catch (Exception e) {
-			throw new RuntimeException("Falha ao salvar Equipamento");
+			throw new RuntimeException("Falha ao atualizar equipamento");
 		}
 	}
 
@@ -50,7 +50,7 @@ public class EquipamentoService {
 			try {
 				repo.delete(obj);
 			} catch (Exception e) {
-				throw new RuntimeException("Falha ao apagar Equipamento");
+				throw new RuntimeException("Falha ao apagar equipamento");
 			}
 		}
 	}

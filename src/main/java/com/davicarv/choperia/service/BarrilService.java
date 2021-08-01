@@ -31,7 +31,7 @@ public class BarrilService {
 		try {
 			return repo.save(b);
 		} catch (Exception e) {
-			throw new RuntimeException("falha ao salvar Barril");
+			throw new RuntimeException("Falha ao salvar barril");
 		}
 	}
 
@@ -40,7 +40,7 @@ public class BarrilService {
 		try {
 			return repo.save(b);
 		} catch (Exception e) {
-			throw new RuntimeException("Falha ao salvar Barril");
+			throw new RuntimeException("Falha ao atualizar barril");
 		}
 	}
 
@@ -50,8 +50,11 @@ public class BarrilService {
 			try {
 				repo.delete(obj);
 			} catch (Exception e) {
-				throw new RuntimeException("Falha ao apagar Barril");
+				throw new RuntimeException("Falha ao apagar barril");
 			}
+		}
+		else {
+			throw new RuntimeException("Não é possível excluir barril com OS.");
 		}
 	}
 }
