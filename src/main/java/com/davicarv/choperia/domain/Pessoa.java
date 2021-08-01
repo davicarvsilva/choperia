@@ -52,12 +52,14 @@ public abstract class Pessoa implements Serializable {
 	@Column(nullable = false, unique = true)
 	@Email
 	@NotBlank
-	@Size(min = 2, max = 50, message = "email deve ter entre 2 e 50 caracteres")
+	@Size(min = 2, max = 50, message = "Email deve ter entre 2 e 50 caracteres")
 	private String email;
 
-	@Column(nullable = false)
-	@Enumerated(EnumType.ORDINAL)
-	private TipoPessoa cpfOuCnpj;
+	@Column(nullable = false, unique = true)
+	@Email
+	@NotBlank
+	@Size(min = 12, max = 15, message = "CPF ou CNPJ deve ter entre 11 e 14 caracteres")
+	private String cpfCnpj;
 
 	@Size(min = 1)
 	@ElementCollection()
@@ -111,12 +113,12 @@ public abstract class Pessoa implements Serializable {
 		this.email = email;
 	}
 
-	public TipoPessoa getCpfOuCnpj() {
-		return cpfOuCnpj;
+	public String getCpfCnpj() {
+		return cpfCnpj;
 	}
 
-	public void setCpfOuCnpj(TipoPessoa cpfOuCnpj) {
-		this.cpfOuCnpj = cpfOuCnpj;
+	public void setCpfCnpj(String cpfCnpj) {
+		this.cpfCnpj = cpfCnpj;
 	}
 
 	public List<Telefone> getTelefones() {
