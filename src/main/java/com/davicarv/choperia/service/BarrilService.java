@@ -3,10 +3,13 @@ package com.davicarv.choperia.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.ConstraintViolationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.davicarv.choperia.domain.Barril;
+import com.davicarv.choperia.exception.NotFoundException;
 import com.davicarv.choperia.repository.BarrilRepository;
 
 @Service
@@ -21,7 +24,7 @@ public class BarrilService {
 	public Barril findById(Long id) {
 		Optional<Barril> result = repo.findById(id);
 		if (result.isEmpty()) {
-			throw new RuntimeException("Barril não encontrado");
+			throw new NotFoundException("Barril não encontrado");
 		} else {
 			return result.get();
 		}
@@ -40,6 +43,13 @@ public class BarrilService {
 		try {
 			return repo.save(b);
 		} catch (Exception e) {
+			Throwable t = e;
+			while(t.getCause() != null) {
+				t = t.getCause();
+				if(t instanceof ConstraintViolationException) {
+					throw((ConstraintViolationException) t);
+				}
+			}
 			throw new RuntimeException("Falha ao atualizar barril");
 		}
 	}

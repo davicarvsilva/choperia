@@ -3,12 +3,15 @@ package com.davicarv.choperia.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.ConstraintViolationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.davicarv.choperia.domain.Equipamento;
 import com.davicarv.choperia.domain.OrdemServico;
 import com.davicarv.choperia.domain.StatusEquipamentoEnum;
+import com.davicarv.choperia.exception.NotFoundException;
 import com.davicarv.choperia.repository.OrdemServicoRepository;
 
 @Service
@@ -23,7 +26,7 @@ public class OrdemServicoService {
 	public OrdemServico findById(Long id) {
 		Optional<OrdemServico> result = repo.findById(id);
 		if (result.isEmpty()) {
-			throw new RuntimeException("Ordem de Serviço não encontrado");
+			throw new NotFoundException("Ordem de Serviço não encontrado");
 		} else {
 			return result.get();
 		}
@@ -49,6 +52,13 @@ public class OrdemServicoService {
 		try {
 			return repo.save(os);
 		} catch (Exception e) {
+			Throwable t = e;
+			while(t.getCause() != null) {
+				t = t.getCause();
+				if(t instanceof ConstraintViolationException) {
+					throw((ConstraintViolationException) t);
+				}
+			}
 			throw new RuntimeException("Falha ao salvar Ordem de Serviço");
 		}
 	}

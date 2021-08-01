@@ -3,13 +3,14 @@ package com.davicarv.choperia.service;
 import java.util.List;
 import java.util.Optional;
 
-
+import javax.validation.ConstraintViolationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.davicarv.choperia.domain.Cliente;
 import com.davicarv.choperia.domain.Pessoa;
+import com.davicarv.choperia.exception.NotFoundException;
 import com.davicarv.choperia.repository.ClienteRepository;
 
 @Service
@@ -24,7 +25,7 @@ public class ClienteService {
 	public Cliente findById(Long id) {
 		Optional<Cliente> result = repo.findById(id);
 		if (result.isEmpty()) {
-			throw new RuntimeException("Cliente não encontrado");
+			throw new NotFoundException("Cliente não encontrado");
 		} else {
 			return result.get();
 		}
@@ -46,6 +47,13 @@ public class ClienteService {
 			b.setCpfCnpj(obj.getCpfCnpj());
 			return repo.save(b);
 		} catch (Exception e) {
+			Throwable t = e;
+			while(t.getCause() != null) {
+				t = t.getCause();
+				if(t instanceof ConstraintViolationException) {
+					throw((ConstraintViolationException) t);
+				}
+			}
 			throw new RuntimeException("Falha ao salvar cliente");
 		}
 	}

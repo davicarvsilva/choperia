@@ -3,12 +3,13 @@ package com.davicarv.choperia.service;
 import java.util.List;
 import java.util.Optional;
 
-import org.hibernate.exception.ConstraintViolationException;
+import javax.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.davicarv.choperia.domain.Funcionario;
 import com.davicarv.choperia.domain.Pessoa;
+import com.davicarv.choperia.exception.NotFoundException;
 import com.davicarv.choperia.repository.FuncionarioRepository;
 
 @Service
@@ -23,7 +24,7 @@ public class FuncionarioService {
 	public Funcionario findById(Long id) {
 		Optional<Funcionario> result = repo.findById(id);
 		if (result.isEmpty()) {
-			throw new RuntimeException("Funcionário não encontrado");
+			throw new NotFoundException("Funcionário não encontrado");
 		} else {
 			return result.get();
 		}
@@ -38,18 +39,6 @@ public class FuncionarioService {
 			throw new RuntimeException("Falha ao salvar funcionário");
 		}
 	}
-	
-	/*
-	public Funcionario update(Funcionario b) {
-		Funcionario obj = findById(b.getId());
-		try {
-			b.setCpfCnpj(obj.getCpfCnpj());
-			return repo.save(b);
-		} catch (Exception e) {
-			throw new RuntimeException("Falha ao atualizar funcionário");
-		}
-	}
-	*/
 
 	public void delete(Long id) {
 		Funcionario obj = findById(id);

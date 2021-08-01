@@ -3,10 +3,13 @@ package com.davicarv.choperia.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.ConstraintViolationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.davicarv.choperia.domain.Equipamento;
+import com.davicarv.choperia.exception.NotFoundException;
 import com.davicarv.choperia.repository.EquipamentoRepository;
 
 @Service
@@ -21,7 +24,7 @@ public class EquipamentoService {
 	public Equipamento findById(Long id) {
 		Optional<Equipamento> result = repo.findById(id);
 		if (result.isEmpty()) {
-			throw new RuntimeException("Equipamento não encontrado");
+			throw new NotFoundException("Equipamento não encontrado");
 		} else {
 			return result.get();
 		}
@@ -40,6 +43,13 @@ public class EquipamentoService {
 		try {
 			return repo.save(b);
 		} catch (Exception e) {
+			Throwable t = e;
+			while(t.getCause() != null) {
+				t = t.getCause();
+				if(t instanceof ConstraintViolationException) {
+					throw((ConstraintViolationException) t);
+				}
+			}
 			throw new RuntimeException("Falha ao atualizar equipamento");
 		}
 	}

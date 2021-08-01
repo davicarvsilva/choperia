@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import com.davicarv.choperia.exception.PropertyError;
 import com.davicarv.choperia.exception.ValidationError;
 import com.davicarv.choperia.exception.Error;
+import com.davicarv.choperia.exception.NotFoundException;
 
 //Classe de escuta das excessões geradas pelos Controllers
 @RestControllerAdvice
@@ -41,7 +42,7 @@ public class MyRestControllerAdvice {
 			error.getErrors().add(p);
 		}
 
-		return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(e);
+		return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(error);
 	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
@@ -49,15 +50,32 @@ public class MyRestControllerAdvice {
 			MethodArgumentNotValidException e, 
 			HttpServletRequest request) {
 		
-		ValidationError error = new ValidationError(Calendar.getInstance(), HttpStatus.UNPROCESSABLE_ENTITY.value(),
-				HttpStatus.UNPROCESSABLE_ENTITY.name(), e.getMessage(), request.getRequestURI());
+		ValidationError error = new ValidationError(
+				Calendar.getInstance(), 
+				HttpStatus.UNPROCESSABLE_ENTITY.value(),
+				HttpStatus.UNPROCESSABLE_ENTITY.name(), 
+				e.getMessage(), 
+				request.getRequestURI());
 
 		for (FieldError fe : e.getBindingResult().getFieldErrors()) {
 			PropertyError p = new PropertyError(fe.getField(), fe.getDefaultMessage());
 			error.getErrors().add(p);
 		}
 
-		return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(e);
+		return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(error);
+	}
+	
+	@ExceptionHandler(NotFoundException.class)
+	public ResponseEntity erroPadrao(NotFoundException e, HttpServletRequest request) {
+		
+		Error error = new Error(
+			Calendar.getInstance(), 
+			HttpStatus.NOT_FOUND.value(), 
+			HttpStatus.NOT_FOUND.name(),
+			e.getMessage(),
+			request.getRequestURI());
+
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
 	}
 
 	@ExceptionHandler(Exception.class)

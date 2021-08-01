@@ -42,7 +42,7 @@ public class OrdemServicoController {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity update(@PathVariable("id") Long id, @Valid @RequestBody OrdemServico ordemServico) {
+	public ResponseEntity update(@PathVariable("id") Long id, @RequestBody OrdemServico ordemServico) {
 		ordemServico.setId(id);
 		service.update(ordemServico);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

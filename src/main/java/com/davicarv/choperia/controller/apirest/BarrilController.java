@@ -42,7 +42,7 @@ public class BarrilController {
 	}
 
 	@PutMapping(path = "/{id}")
-	public ResponseEntity update(@PathVariable("id") Long id, @Valid @RequestBody Barril barril) {
+	public ResponseEntity update(@PathVariable("id") Long id,@RequestBody Barril barril) {
 		barril.setId(id);
 		service.update(barril);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

@@ -5,7 +5,8 @@ import java.util.Calendar;
 import java.util.List;
 
 public class ValidationError extends Error {
-
+	private static final long serialVersionUID = 1L;
+	
 	private List<PropertyError> errors = new ArrayList<>();
 
 	public ValidationError(

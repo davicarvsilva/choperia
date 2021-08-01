@@ -42,7 +42,7 @@ public class EquipamentoController {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity update(@PathVariable("id") Long id, @Valid @RequestBody Equipamento equipamento) {
+	public ResponseEntity update(@PathVariable("id") Long id, @RequestBody Equipamento equipamento) {
 		equipamento.setId(id);
 		service.update(equipamento);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
