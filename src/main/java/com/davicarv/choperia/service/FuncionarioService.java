@@ -69,7 +69,7 @@ public class FuncionarioService {
 		alterarSenha(obj, senhaAtual, novaSenha, confirmarNovaSenha);
 
 		try {
-			funcionario.setCpfOuCnpj(funcionario.getCpfOuCnpj());
+			funcionario.setCpfCnpj(funcionario.getCpfCnpj());
 			funcionario.setEmail(funcionario.getEmail());
 			return repo.save(funcionario);
 		} catch (Exception e) {

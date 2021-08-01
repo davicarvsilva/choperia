@@ -74,7 +74,7 @@ public class ClienteService {
 		alterarSenha(obj, senhaAtual, novaSenha, confirmarNovaSenha);
 
 		try {
-			cliente.setCpfOuCnpj(obj.getCpfOuCnpj());
+			cliente.setCpfCnpj(obj.getCpfCnpj());
 			cliente.setEmail(obj.getEmail());
 			return repo.save(cliente);
 		} catch (Exception e) {
