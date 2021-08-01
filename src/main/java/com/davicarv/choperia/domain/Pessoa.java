@@ -20,6 +20,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.OneToOne;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -66,16 +67,9 @@ public abstract class Pessoa implements Serializable {
 	@ElementCollection()
 	private List<Endereco> enderecos = new ArrayList<>();
 
-	@NotNull
-	@OneToOne(cascade = CascadeType.ALL)
-	private Usuario usuario;
-
-	@Override
-	public String toString() {
-		return "Pessoa [id=" + id + ", nome=" + nome + ", sobrenome=" + sobrenome + ", dataNascimento=" + dataNascimento
-				+ ", email=" + email + ", cpfOuCnpj=" + cpfOuCnpj + ", telefones=" + telefones + ", enderecos="
-				+ enderecos + ", usuario=" + usuario + "]";
-	}
+	@Max(value = 30, message = "senha precisa ter no máximo 30 caracteres")
+	@NotBlank
+	private String senha;
 
 	public Long getId() {
 		return id;
@@ -141,12 +135,12 @@ public abstract class Pessoa implements Serializable {
 		this.enderecos = enderecos;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
+	public String getSenha() {
+		return senha;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
 	@Override

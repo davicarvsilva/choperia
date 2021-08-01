@@ -20,7 +20,7 @@ import com.davicarv.choperia.service.ClienteService;
 @RestController
 @RequestMapping(path = "/apirest/clientes")
 public class ClienteController {
-	@Autowired
+	@Autowired	
 	private ClienteService service;
 
 	@GetMapping
@@ -42,9 +42,9 @@ public class ClienteController {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity update(@PathVariable("id") Long id, @Valid @RequestBody Cliente cliente) {
+	public ResponseEntity update(@PathVariable("id") Long id, @RequestBody Cliente cliente) {
 		cliente.setId(id);
-		service.update(cliente);
+		service.update(cliente, "", "", "");
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
 

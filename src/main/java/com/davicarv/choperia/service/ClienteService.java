@@ -34,7 +34,7 @@ public class ClienteService {
 		}
 	}
 
-	public Cliente save(Cliente b, MultipartFile file) {
+	public Cliente save(Cliente b) {
 		verificaEmailCadastrado(b.getEmail());
 		
 		try {
@@ -74,8 +74,8 @@ public class ClienteService {
 		alterarSenha(obj, senhaAtual, novaSenha, confirmarNovaSenha);
 
 		try {
-			cliente.setCpfOuCnpj(cliente.getCpfOuCnpj());
-			cliente.setEmail(cliente.getEmail());
+			cliente.setCpfOuCnpj(obj.getCpfOuCnpj());
+			cliente.setEmail(obj.getEmail());
 			return repo.save(cliente);
 		} catch (Exception e) {
 			throw new RuntimeException("Falha ao atualizar o Cliente ");
