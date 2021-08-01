@@ -47,15 +47,11 @@ public class ChoperiaApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		// Usuario1
-		Usuario usuario = new Usuario();
-		usuario.setNomeUsuario("davicarv");
-		usuario.setSenha("123");
 		
 		// Cliente
 		Cliente c1 = new Cliente();
 		c1.setNome("Davi");
-		c1.setCpfOuCnpj(TipoPessoa.PESSOA_FISICA);
+		c1.setCpfCnpj("12205090719");
 		c1.setEmail("davicarv13@gmail.com");
 		c1.setSobrenome("Carvalho");
 		c1.setDocumentacao("...");
@@ -82,7 +78,7 @@ public class ChoperiaApplication implements CommandLineRunner {
 		c1.setEnderecos(enderecosCliente);
 		c1.setDataNascimento(dataNascimentoCliente);
 		c1.setTelefones(telefonesCliente);
-		c1.setUsuario(usuario);
+		c1.setSenha("123");
 		
 		clienteRepo.save(c1);
 
@@ -101,15 +97,10 @@ public class ChoperiaApplication implements CommandLineRunner {
 		
 		barrilRepo.save(barril);
 		
-		// Usuario1
-		Usuario usuario2 = new Usuario();
-		usuario2.setNomeUsuario("silascarv");
-		usuario2.setSenha("123");
-		
 		// Funcionario
 		Funcionario f1 = new Funcionario();
 		f1.setNome("Silas");
-		f1.setCpfOuCnpj(TipoPessoa.PESSOA_FISICA);
+		f1.setCpfCnpj("12205098112");
 		f1.setEmail("silascarv@gmail.com");
 		f1.setSobrenome("Carvalho");
 		
@@ -135,7 +126,7 @@ public class ChoperiaApplication implements CommandLineRunner {
 		f1.setEnderecos(enderecosCliente2);
 		f1.setDataNascimento(dataNascimentoCliente2);
 		f1.setTelefones(telefonesCliente2);
-		f1.setUsuario(usuario2);
+		f1.setSenha("123");
 		f1.setCargo("Entregador");
 		f1.setSalario(1500);
 		funcionarioRepo.save(f1);
