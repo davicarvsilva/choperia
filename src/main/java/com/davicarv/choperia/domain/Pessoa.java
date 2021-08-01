@@ -29,6 +29,7 @@ import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.NotNull;
 
@@ -52,6 +53,7 @@ public abstract class Pessoa implements Serializable {
 	@NotBlank
 	private String sobrenome;
 
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	@Temporal(TemporalType.TIMESTAMP)
 	@NotNull
 	@DateTimeFormat(pattern = "yyyy-MM-dd")

@@ -19,6 +19,7 @@ import javax.validation.constraints.Positive;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 
@@ -39,12 +40,14 @@ public class Barril implements Serializable {
 	@Enumerated(EnumType.ORDINAL)
 	private MarcaBarrilEnum marca;
 
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	@Temporal(TemporalType.TIMESTAMP)
 	@NotNull
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(nullable = false)
 	private Calendar fabricacao;
 
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	@Temporal(TemporalType.TIMESTAMP)
 	@NotNull
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
