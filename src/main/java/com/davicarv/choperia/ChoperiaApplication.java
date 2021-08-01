@@ -17,6 +17,7 @@ import com.davicarv.choperia.domain.Funcionario;
 import com.davicarv.choperia.domain.MarcaBarrilEnum;
 import com.davicarv.choperia.domain.OrdemServico;
 import com.davicarv.choperia.domain.StatusEquipamentoEnum;
+import com.davicarv.choperia.domain.StatusOrdemServico;
 import com.davicarv.choperia.domain.Telefone;
 import com.davicarv.choperia.domain.TipoPessoa;
 import com.davicarv.choperia.domain.Usuario;
@@ -24,6 +25,7 @@ import com.davicarv.choperia.repository.BarrilRepository;
 import com.davicarv.choperia.repository.ClienteRepository;
 import com.davicarv.choperia.repository.EquipamentoRepository;
 import com.davicarv.choperia.repository.FuncionarioRepository;
+import com.davicarv.choperia.repository.OrdemServicoRepository;
 
 @SpringBootApplication
 public class ChoperiaApplication implements CommandLineRunner {
@@ -36,6 +38,8 @@ public class ChoperiaApplication implements CommandLineRunner {
 	private FuncionarioRepository funcionarioRepo;
 	@Autowired
 	private EquipamentoRepository equipamentoRepo;
+	@Autowired
+	private OrdemServicoRepository ordemServicoRepo;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ChoperiaApplication.class, args);
@@ -145,5 +149,34 @@ public class ChoperiaApplication implements CommandLineRunner {
 		equipamento.setDescricao("Chopeira 110v");
 		
 		equipamentoRepo.save(equipamento);
+		
+		//Ordem de Serviço
+		OrdemServico os = new OrdemServico();
+		os.setAcrescimo(10);
+		os.setAssepsia(false);
+		List<Barril> listaBarrils = new ArrayList<>();
+		listaBarrils.add(barril);
+		os.setBarris(listaBarrils);
+		os.setCliente(c1);
+		List<Funcionario> listaFuncionarios = new ArrayList<>();
+		listaFuncionarios.add(f1);
+		os.setDescricao("Entrega de barril");
+		List<Equipamento> listaEquipamentos = new ArrayList<>();
+		listaEquipamentos.add(equipamento);
+		os.setEquipamentos(listaEquipamentos);
+		os.setStatus(StatusOrdemServico.ENTREGUE);
+		Calendar dataEntrega = Calendar.getInstance();
+		Calendar dataDevolucao = Calendar.getInstance();
+		Calendar dataCriacao = Calendar.getInstance();
+		dataCriacao.set(2021, 8, 5);
+		dataEntrega.set(2021, 8, 5);
+		dataDevolucao.set(2021, 8, 10);
+		
+		os.setDataDevolucao(dataDevolucao);
+		os.setDataEntrega(dataEntrega);
+		os.setDataCriacao(dataCriacao);
+		
+		ordemServicoRepo.save(os);
+		
 	}
 }

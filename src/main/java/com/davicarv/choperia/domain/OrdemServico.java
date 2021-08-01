@@ -97,6 +97,10 @@ public class OrdemServico implements Serializable {
 		this.descricao = descricao;
 	}
 
+	public void setDataCriacao(Calendar dataCriacao) {
+		this.dataCriacao = dataCriacao;
+	}
+
 	public Calendar getdataCriacao() {
 		return dataCriacao;
 	}
