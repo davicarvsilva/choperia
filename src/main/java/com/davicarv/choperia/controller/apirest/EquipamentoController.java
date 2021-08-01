@@ -1,4 +1,4 @@
-package com.davicarv.choperia.controllera.apirest;
+package com.davicarv.choperia.controller.apirest;
 
 import javax.validation.Valid;
 

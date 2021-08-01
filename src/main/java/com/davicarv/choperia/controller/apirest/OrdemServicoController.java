@@ -1,8 +1,7 @@
-package com.davicarv.choperia.controllera.apirest;
+package com.davicarv.choperia.controller.apirest;
 
 import javax.validation.Valid;
 
-import org.graalvm.compiler.hotspot.HotSpotGraalVMEventListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,17 +12,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.davicarv.choperia.domain.Barril;
-import com.davicarv.choperia.service.BarrilService;
+import com.davicarv.choperia.domain.OrdemServico;
+import com.davicarv.choperia.service.OrdemServicoService;
 
 @RestController
-@RequestMapping(path = "/apirest/barris")
-public class BarrilController {
+@RequestMapping(path = "/apirest/ordensServico")
+public class OrdemServicoController {
 	@Autowired
-	private BarrilService service;
+	private OrdemServicoService service;
 
 	@GetMapping
 	public ResponseEntity getAll() {
@@ -36,17 +34,17 @@ public class BarrilController {
 	}
 
 	@PostMapping
-	public ResponseEntity save(@Valid @RequestBody Barril barril) {
-		barril.setId(null);
-		service.save(barril);
+	public ResponseEntity save(@Valid @RequestBody OrdemServico ordemServico) {
+		ordemServico.setId((Long) null);
+		service.save(ordemServico);
 
-		return ResponseEntity.status(HttpStatus.CREATED).body(barril);
+		return ResponseEntity.status(HttpStatus.CREATED).body(ordemServico);
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity update(@PathVariable("id") Long id, @Valid @RequestBody Barril barril) {
-		barril.setId(id);
-		service.update(barril);
+	public ResponseEntity update(@PathVariable("id") Long id, @Valid @RequestBody OrdemServico ordemServico) {
+		ordemServico.setId(id);
+		service.update(ordemServico);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
 

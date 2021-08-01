@@ -40,7 +40,9 @@ public class BarrilViewController {
 			model.addAttribute("msgErros", result.getFieldErrors());
 
 		}
+		
 		barril.setId(null);
+		
 		try {
 			service.save(barril);
 		} catch (Exception e) {

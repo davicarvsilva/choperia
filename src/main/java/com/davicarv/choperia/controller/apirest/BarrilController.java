@@ -1,4 +1,4 @@
-package com.davicarv.choperia.controllera.apirest;
+package com.davicarv.choperia.controller.apirest;
 
 import javax.validation.Valid;
 
@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.davicarv.choperia.domain.OrdemServico;
-import com.davicarv.choperia.service.OrdemServicoService;
+import com.davicarv.choperia.domain.Barril;
+import com.davicarv.choperia.service.BarrilService;
 
 @RestController
-@RequestMapping(path = "/apirest/ordensServico")
-public class OrdemServicoController {
+@RequestMapping(path = "/apirest/barris")
+public class BarrilController {
 	@Autowired
-	private OrdemServicoService service;
+	private BarrilService service;
 
 	@GetMapping
 	public ResponseEntity getAll() {
@@ -34,21 +34,21 @@ public class OrdemServicoController {
 	}
 
 	@PostMapping
-	public ResponseEntity save(@Valid @RequestBody OrdemServico ordemServico) {
-		ordemServico.setId((Long) null);
-		service.save(ordemServico);
+	public ResponseEntity save(@Valid @RequestBody Barril barril) {
+		barril.setId(null);
+		service.save(barril);
 
-		return ResponseEntity.status(HttpStatus.CREATED).body(ordemServico);
+		return ResponseEntity.status(HttpStatus.CREATED).body(barril);
 	}
 
-	@PutMapping("/{id}")
-	public ResponseEntity update(@PathVariable("id") Long id, @Valid @RequestBody OrdemServico ordemServico) {
-		ordemServico.setId(id);
-		service.update(ordemServico);
+	@PutMapping(path = "/{id}")
+	public ResponseEntity update(@PathVariable("id") Long id, @Valid @RequestBody Barril barril) {
+		barril.setId(id);
+		service.update(barril);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
 
-	@DeleteMapping("/{id}")
+	@DeleteMapping(path = "/{id}")
 	public ResponseEntity delete(@PathVariable("id") Long id) {
 		service.delete(id);
 		return ResponseEntity.ok().build();

@@ -1,4 +1,4 @@
-package com.davicarv.choperia.controllera.apirest;
+package com.davicarv.choperia.controller.apirest;
 
 import javax.validation.Valid;
 
@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.davicarv.choperia.domain.Funcionario;
-import com.davicarv.choperia.service.FuncionarioService;
+import com.davicarv.choperia.domain.Cliente;
+import com.davicarv.choperia.service.ClienteService;
 
 @RestController
-@RequestMapping(path = "/apirest/funcionarios")
-public class FuncionarioController {
+@RequestMapping(path = "/apirest/clientes")
+public class ClienteController {
 	@Autowired
-	private FuncionarioService service;
+	private ClienteService service;
 
 	@GetMapping
 	public ResponseEntity getAll() {
@@ -34,17 +34,17 @@ public class FuncionarioController {
 	}
 
 	@PostMapping
-	public ResponseEntity save(@Valid @RequestBody Funcionario funcionario) {
-		funcionario.setId((Long) null);
-		service.save(funcionario);
+	public ResponseEntity save(@Valid @RequestBody Cliente cliente) {
+		cliente.setId(null);
+		service.save(cliente);
 
-		return ResponseEntity.status(HttpStatus.CREATED).body(funcionario);
+		return ResponseEntity.status(HttpStatus.CREATED).body(cliente);
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity update(@PathVariable("id") Long id, @Valid @RequestBody Funcionario funcionario) {
-		funcionario.setId(id);
-		service.update(funcionario);
+	public ResponseEntity update(@PathVariable("id") Long id, @Valid @RequestBody Cliente cliente) {
+		cliente.setId(id);
+		service.update(cliente);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
 
