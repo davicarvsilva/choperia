@@ -84,14 +84,14 @@ public class ClienteService {
 
 	private void alterarSenha(Cliente obj, String senhaAtual, String novaSenha, String confirmarNovaSenha) {
 		if (!senhaAtual.isBlank() && !novaSenha.isBlank() && !confirmarNovaSenha.isBlank()) {
-			if (!senhaAtual.equals(obj.getUsuario().getSenha())) {
+			if (!senhaAtual.equals(obj.getSenha())) {
 				throw new RuntimeException("Senha atual está incorreta");
 			}
 			if (!novaSenha.equals(confirmarNovaSenha)) {
 				throw new RuntimeException("Nova senha e confirmar nova senha não conferem");
 			}
 
-			obj.getUsuario().setSenha(novaSenha);
+			obj.setSenha(novaSenha);
 		}
 	}
 	
