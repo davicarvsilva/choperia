@@ -22,6 +22,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 
@@ -41,12 +43,21 @@ public class OrdemServico implements Serializable {
 	@NotBlank
 	private String descricao;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	@NotNull
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(nullable = false)
 	private Calendar dataCriacao;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	@NotNull
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(nullable = false)
 	private Calendar dataEntrega;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	@NotNull
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(nullable = false)
 	private Calendar dataDevolucao;
 
