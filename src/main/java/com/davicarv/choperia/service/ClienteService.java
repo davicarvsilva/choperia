@@ -3,18 +3,14 @@ package com.davicarv.choperia.service;
 import java.util.List;
 import java.util.Optional;
 
-import javax.management.RuntimeErrorException;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.davicarv.choperia.domain.Cliente;
 import com.davicarv.choperia.domain.Pessoa;
 import com.davicarv.choperia.repository.ClienteRepository;
-import com.mysql.cj.xdevapi.Result;
-
-import jdk.jfr.events.ErrorThrownEvent;
 
 @Service
 public class ClienteService {
@@ -45,7 +41,7 @@ public class ClienteService {
 	}
 
 	public Cliente update(Cliente b) {
-		Cliente obj = findById(b.getId());
+		//Cliente obj = findById(b.getId());
 		try {
 			return repo.save(b);
 		} catch (Exception e) {

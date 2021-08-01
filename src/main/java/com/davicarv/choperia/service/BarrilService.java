@@ -36,7 +36,7 @@ public class BarrilService {
 	}
 
 	public Barril update(Barril b) {
-		Barril obj = findById(b.getId());
+		//Barril obj = findById(b.getId());
 		try {
 			return repo.save(b);
 		} catch (Exception e) {

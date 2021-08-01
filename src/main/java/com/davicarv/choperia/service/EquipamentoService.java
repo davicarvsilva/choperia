@@ -36,7 +36,7 @@ public class EquipamentoService {
 	}
 
 	public Equipamento update(Equipamento b) {
-		Equipamento obj = findById(b.getId());
+		//Equipamento obj = findById(b.getId());
 		try {
 			return repo.save(b);
 		} catch (Exception e) {

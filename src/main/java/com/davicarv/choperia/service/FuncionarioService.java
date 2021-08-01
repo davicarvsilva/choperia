@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.davicarv.choperia.domain.Cliente;
 import com.davicarv.choperia.domain.Funcionario;
 import com.davicarv.choperia.domain.Pessoa;
 import com.davicarv.choperia.repository.FuncionarioRepository;
@@ -40,7 +39,7 @@ public class FuncionarioService {
 	}
 
 	public Funcionario update(Funcionario b) {
-		Funcionario obj = findById(b.getId());
+		//Funcionario obj = findById(b.getId());
 		try {
 			return repo.save(b);
 		} catch (Exception e) {
