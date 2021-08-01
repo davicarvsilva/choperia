@@ -22,12 +22,22 @@ import com.davicarv.choperia.exception.Error;
 public class MyRestControllerAdvice {
 
 	@ExceptionHandler(ConstraintViolationException.class)	
-	public ResponseEntity erroValidacao(ConstraintViolationException e, HttpServletRequest request) {
-		ValidationError error = new ValidationError(Calendar.getInstance(), HttpStatus.UNPROCESSABLE_ENTITY.value(),
-				HttpStatus.UNPROCESSABLE_ENTITY.name(), e.getMessage(), request.getRequestURI());
+	public ResponseEntity erroValidacao(
+			ConstraintViolationException e, 
+			HttpServletRequest request) {
+		
+		ValidationError error = new ValidationError(
+				Calendar.getInstance(), 
+				HttpStatus.UNPROCESSABLE_ENTITY.value(),
+				HttpStatus.UNPROCESSABLE_ENTITY.name(), 
+				"Erro de validação", 
+				request.getRequestURI());
 
 		for (ConstraintViolation cv : e.getConstraintViolations()) {
-			PropertyError p = new PropertyError(cv.getPropertyPath().toString(), cv.getMessage());
+			PropertyError p = new PropertyError(
+					cv.getPropertyPath().toString(), 
+					cv.getMessage());
+			
 			error.getErrors().add(p);
 		}
 
@@ -35,7 +45,10 @@ public class MyRestControllerAdvice {
 	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity erroValidacao(MethodArgumentNotValidException e, HttpServletRequest request) {
+	public ResponseEntity erroValidacao(
+			MethodArgumentNotValidException e, 
+			HttpServletRequest request) {
+		
 		ValidationError error = new ValidationError(Calendar.getInstance(), HttpStatus.UNPROCESSABLE_ENTITY.value(),
 				HttpStatus.UNPROCESSABLE_ENTITY.name(), e.getMessage(), request.getRequestURI());
 

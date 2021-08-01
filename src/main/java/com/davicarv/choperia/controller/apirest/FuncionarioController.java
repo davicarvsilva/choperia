@@ -46,7 +46,7 @@ public class FuncionarioController {
 	@PutMapping("/{id}")
 	public ResponseEntity update(@PathVariable("id") Long id, @Valid @RequestBody Funcionario funcionario) {
 		funcionario.setId(id);
-		service.update(funcionario);
+		service.update(funcionario, "", "", "");
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
 

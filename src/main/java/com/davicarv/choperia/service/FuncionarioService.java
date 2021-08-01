@@ -3,6 +3,7 @@ package com.davicarv.choperia.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,7 +38,8 @@ public class FuncionarioService {
 			throw new RuntimeException("Falha ao salvar funcionário");
 		}
 	}
-
+	
+	/*
 	public Funcionario update(Funcionario b) {
 		Funcionario obj = findById(b.getId());
 		try {
@@ -47,6 +49,7 @@ public class FuncionarioService {
 			throw new RuntimeException("Falha ao atualizar funcionário");
 		}
 	}
+	*/
 
 	public void delete(Long id) {
 		Funcionario obj = findById(id);
@@ -74,6 +77,14 @@ public class FuncionarioService {
 			funcionario.setSenha(obj.getSenha());
 			return repo.save(funcionario);
 		} catch (Exception e) {
+			Throwable t = e;
+			while(t.getCause() != null) {
+				t = t.getCause();
+				if(t instanceof ConstraintViolationException) {
+					throw((ConstraintViolationException) t);
+				}
+			}
+			
 			throw new RuntimeException("Falha ao atualizar funcionário ");
 		}
 	}

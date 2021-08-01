@@ -8,9 +8,15 @@ public class ValidationError extends Error {
 
 	private List<PropertyError> errors = new ArrayList<>();
 
-	public ValidationError(Calendar timestamp, Integer status, String error, String message, String path) {
+	public ValidationError(
+			Calendar timestamp, 
+			Integer status, 
+			String error, 
+			String message, 
+			String path) {
+		
 		super(timestamp, status, error, message, path);
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public List<PropertyError> getErrors() {
