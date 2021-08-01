@@ -69,8 +69,9 @@ public class FuncionarioService {
 		alterarSenha(obj, senhaAtual, novaSenha, confirmarNovaSenha);
 
 		try {
-			funcionario.setCpfCnpj(funcionario.getCpfCnpj());
-			funcionario.setEmail(funcionario.getEmail());
+			funcionario.setCpfCnpj(obj.getCpfCnpj());
+			funcionario.setEmail(obj.getEmail());
+			funcionario.setSenha(obj.getSenha());
 			return repo.save(funcionario);
 		} catch (Exception e) {
 			throw new RuntimeException("Falha ao atualizar funcionário ");

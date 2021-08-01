@@ -20,7 +20,6 @@ import com.davicarv.choperia.domain.StatusEquipamentoEnum;
 import com.davicarv.choperia.domain.StatusOrdemServico;
 import com.davicarv.choperia.domain.Telefone;
 import com.davicarv.choperia.domain.TipoPessoa;
-import com.davicarv.choperia.domain.Usuario;
 import com.davicarv.choperia.repository.BarrilRepository;
 import com.davicarv.choperia.repository.ClienteRepository;
 import com.davicarv.choperia.repository.EquipamentoRepository;

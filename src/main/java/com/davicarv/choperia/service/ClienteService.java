@@ -76,6 +76,7 @@ public class ClienteService {
 		try {
 			cliente.setCpfCnpj(obj.getCpfCnpj());
 			cliente.setEmail(obj.getEmail());
+			cliente.setSenha(obj.getSenha());
 			return repo.save(cliente);
 		} catch (Exception e) {
 			throw new RuntimeException("Falha ao atualizar o Cliente ");
