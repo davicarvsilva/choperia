@@ -6,7 +6,7 @@ import java.util.List;
 import javax.persistence.Column;
 
 import javax.persistence.Entity;
-
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
@@ -33,6 +33,10 @@ public class Funcionario extends Pessoa {
 	@ManyToMany
 	private List<OrdemServico> ordensServico = new ArrayList<>();
 
+	@ManyToMany(fetch = FetchType.EAGER)
+	@Size(min = 1, message = "Funcionário deve ter no mínimo 1 permissão")
+	private List<Permissao> permissoes;
+	
 	public String getCargo() {
 		return cargo;
 	}
@@ -55,6 +59,14 @@ public class Funcionario extends Pessoa {
 
 	public void setOrdensServico(List<OrdemServico> ordensServico) {
 		this.ordensServico = ordensServico;
+	}
+
+	public List<Permissao> getPermissoes() {
+		return permissoes;
+	}
+
+	public void setPermissoes(List<Permissao> permissoes) {
+		this.permissoes = permissoes;
 	}
 
 	@Override
