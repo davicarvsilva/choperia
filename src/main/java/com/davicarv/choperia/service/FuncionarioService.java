@@ -92,8 +92,8 @@ public class FuncionarioService {
 	}
 	
 	private void verificaEmailCadastrado(String email) {
-		List<Pessoa> listaPessoas = repo.findByEmail(email);
-		if(!listaPessoas.isEmpty()) {
+		Funcionario funcionario = repo.findByEmail(email);
+		if(funcionario == null) {
 			throw new RuntimeException("Email já cadastrado");
 		}
 	}

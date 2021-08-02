@@ -12,6 +12,5 @@ import com.davicarv.choperia.domain.Pessoa;
 
 @Repository
 public interface FuncionarioRepository extends JpaRepository<Funcionario, Long> {
-	@Query("SELECT p FROM Pessoa p WHERE p.email = :email")
-	public List<Pessoa> findByEmail(@Param("email") String email);
+	public Funcionario findByEmail(@Param("email") String email);
 }
