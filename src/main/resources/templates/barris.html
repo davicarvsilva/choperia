@@ -1,8 +1,51 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+	<head th:replace="~{fragmentos :: imports-css(title='Choperia')}">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title></title>
+	</head>
+
 	<body>
-		<div>
-			Barris
+		<div th:replace="~{fragmentos :: barramenu(pagina='barris')}"/>
+			
+		<div class="container">
+			<div class="card-header">
+				<h4>
+					Barris Cadastrados 
+					<a class="btn btn-primary float-right" th:href="@{~/barris/barril}" role="button">Novo Barril</a>
+				</h4>
+			</div>
+			
+			<div class="card" th:each="barril : ${barris}">
+				<div class="card-body">
+					<h5 class="card-title" th:text="${barril.marca}"></h5>
+				</div>
+				
+				<div class="card-body">
+					<h5 class="card-title" th:text="${barril.tamanho}"></h5>
+				</div>
+				
+				<div class="card-body">
+					<h5 class="card-title" th:text="${#calendars.format(barril.fabricacao.time, 'dd/MM/yyyy')}"></h5>
+				</div>
+				
+				<div class="card-body">
+					<h5 class="card-title" th:text="${#calendars.format(barril.validade.time, 'dd/MM/yyyy')}"></h5>
+				</div>
+				
+				<div class="card-body">
+					<h5 class="card-title" th:text="${barril.preco}"></h5>
+				</div>
+				
+				<div class="card-body">
+					<a th:href="@{~/barris/barril}" class="btn btn-success">Cadastrar novo barril</a>
+					<a th:href="@{'~/barris/barril'+'${barril.id}}" class="btn btn-warning">Editar</a>
+					<a th:href="@{'~/barris/'+${barril.id}+/'deletar'}" class="btn btn-danger" onclick="return confirm('Deseja realmente excluir?')">Excluir</a>
+				</div>
+			</div>
 		</div>
+		
+		<div th:replace="~{fragmentos :: imports-js}" />
 	</body>
 </html>
