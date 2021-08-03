@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javax.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.davicarv.choperia.domain.Funcionario;
@@ -34,6 +35,9 @@ public class FuncionarioService {
 		verificaEmailCadastrado(b.getEmail());
 		
 		try {
+			
+			b.setSenha(new BCryptPasswordEncoder().encode(b.getSenha()));
+			
 			return repo.save(b);
 		} catch (Exception e) {
 			throw new RuntimeException("Falha ao salvar funcionário");
@@ -87,7 +91,7 @@ public class FuncionarioService {
 				throw new RuntimeException("Nova senha e confirmar nova senha não conferem");
 			}
 
-			obj.setSenha(novaSenha);
+			obj.setSenha(new BCryptPasswordEncoder().encode(novaSenha));
 		}
 	}
 	
