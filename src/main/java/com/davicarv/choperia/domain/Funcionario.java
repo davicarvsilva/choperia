@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
@@ -28,6 +29,12 @@ public class Funcionario extends Pessoa {
 	@Positive
 	@Max(value = 100000, message = "salário não pode ser maior que R$ 100000")
 	private double salario;
+	
+	@Column(nullable = false, unique = true)
+	@Email
+	@NotBlank
+	@Size(min = 2, max = 50, message = "Email deve ter entre 2 e 50 caracteres")
+	private String email;
 
 	@JsonIgnore
 	@ManyToMany
@@ -35,7 +42,11 @@ public class Funcionario extends Pessoa {
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@Size(min = 1, message = "Funcionário deve ter no mínimo 1 permissão")
-	private List<Permissao> permissoes;
+	private List<Permissao> permissoes = new ArrayList<>();
+	
+	@Max(value = 30, message = "senha precisa ter no máximo 30 caracteres")
+	@NotBlank
+	private String senha;
 	
 	public String getCargo() {
 		return cargo;
@@ -69,8 +80,19 @@ public class Funcionario extends Pessoa {
 		this.permissoes = permissoes;
 	}
 
-	@Override
-	public String toString() {
-		return "Funcionario [cargo=" + cargo + ", salario=" + salario + ", ordensServico=" + ordensServico + "]";
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 }

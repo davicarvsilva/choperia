@@ -76,28 +76,13 @@ public class ClienteService {
 		// Verifica se cliente já existe
 		Cliente obj = findById(cliente.getId());
 		// Verifica alteração de senha
-		alterarSenha(obj, senhaAtual, novaSenha, confirmarNovaSenha);
 
 		try {
 			cliente.setCpfCnpj(obj.getCpfCnpj());
 			cliente.setEmail(obj.getEmail());
-			cliente.setSenha(obj.getSenha());
 			return repo.save(cliente);
 		} catch (Exception e) {
 			throw new RuntimeException("Falha ao atualizar o Cliente ");
-		}
-	}
-
-	private void alterarSenha(Cliente obj, String senhaAtual, String novaSenha, String confirmarNovaSenha) {
-		if (!senhaAtual.isBlank() && !novaSenha.isBlank() && !confirmarNovaSenha.isBlank()) {
-			if (!senhaAtual.equals(obj.getSenha())) {
-				throw new RuntimeException("Senha atual está incorreta");
-			}
-			if (!novaSenha.equals(confirmarNovaSenha)) {
-				throw new RuntimeException("Nova senha e confirmar nova senha não conferem");
-			}
-
-			obj.setSenha(novaSenha);
 		}
 	}
 	

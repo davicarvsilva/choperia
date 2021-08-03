@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
@@ -18,6 +19,12 @@ public class Cliente extends Pessoa {
 	@Size(max = 100, message = "documentação não pode ter mais de 100 caracteres")
 	@NotBlank
 	private String documentacao;
+	
+	@Column(nullable = false, unique = true)
+	@Email
+	@NotBlank
+	@Size(min = 2, max = 50, message = "Email deve ter entre 2 e 50 caracteres")
+	private String email;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "cliente")
@@ -37,5 +44,13 @@ public class Cliente extends Pessoa {
 
 	public void setOrdensServico(List<OrdemServico> ordensServico) {
 		this.ordensServico = ordensServico;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 }

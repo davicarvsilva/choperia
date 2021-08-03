@@ -1,5 +1,7 @@
 package com.davicarv.chopeira.security;
 
+import javax.transaction.Transactional;
+
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
@@ -9,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+@Transactional
 @EnableWebSecurity
 public class MyWebSecurity extends WebSecurityConfigurerAdapter{
 	@Autowired
@@ -20,8 +23,8 @@ public class MyWebSecurity extends WebSecurityConfigurerAdapter{
 		.and()
 		.authorizeRequests()
 		.antMatchers("/apirest/**").hasRole("ADMIN")
-		.antMatchers("/files/**").hasAnyRole("FUNC", "ADMIN")
-		.antMatchers("/funcionarios/meusdados/**").hasAnyRole("ADMIN", "FUNC")
+		//.antMatchers("/files/**").hasAnyRole("FUNC", "ADMIN")
+		//.antMatchers("/funcionarios/meusdados/**").hasAnyRole("ADMIN", "FUNC")
 		.antMatchers("/funcionarios").hasRole("ADMIN")
 		.antMatchers("/funcionarios/**").hasRole("ADMIN")
 		.antMatchers("/**").hasAnyRole("ADMIN","FUNC")

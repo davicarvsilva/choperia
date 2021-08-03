@@ -63,12 +63,6 @@ public abstract class Pessoa implements Serializable {
 	@Column(nullable = false, unique = true)
 	@Email
 	@NotBlank
-	@Size(min = 2, max = 50, message = "Email deve ter entre 2 e 50 caracteres")
-	private String email;
-
-	@Column(nullable = false, unique = true)
-	@Email
-	@NotBlank
 	@Size(min = 12, max = 15, message = "CPF ou CNPJ deve ter entre 11 e 14 caracteres")
 	private String cpfCnpj;
 
@@ -79,10 +73,6 @@ public abstract class Pessoa implements Serializable {
 	@Size(min = 1)
 	@ElementCollection()
 	private List<Endereco> enderecos = new ArrayList<>();
-
-	@Max(value = 30, message = "senha precisa ter no máximo 30 caracteres")
-	@NotBlank
-	private String senha;
 
 	public Long getId() {
 		return id;
@@ -116,14 +106,6 @@ public abstract class Pessoa implements Serializable {
 		this.dataNascimento = dataNascimento;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
 	public String getCpfCnpj() {
 		return cpfCnpj;
 	}
@@ -146,14 +128,6 @@ public abstract class Pessoa implements Serializable {
 
 	public void setEnderecos(List<Endereco> enderecos) {
 		this.enderecos = enderecos;
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
 	}
 
 	@Override

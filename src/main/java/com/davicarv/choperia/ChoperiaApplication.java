@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -57,7 +59,7 @@ public class ChoperiaApplication implements CommandLineRunner {
 		p1.setNome("ADMIN");
 		
 		Permissao p2 = new Permissao();
-		p1.setNome("FUNC");
+		p2.setNome("FUNC");
 		permissaoRepo.saveAll(List.of(p1, p2));
 		
 		// Cliente
@@ -90,7 +92,6 @@ public class ChoperiaApplication implements CommandLineRunner {
 		c1.setEnderecos(enderecosCliente);
 		c1.setDataNascimento(dataNascimentoCliente);
 		c1.setTelefones(telefonesCliente);
-		c1.setSenha("123");
 		
 		clienteRepo.save(c1);
 
@@ -111,7 +112,7 @@ public class ChoperiaApplication implements CommandLineRunner {
 		
 		// Funcionario
 		Funcionario f1 = new Funcionario();
-		f1.setPermissoes(List.of(p1));
+		f1.setPermissoes(List.of(p2));
 		f1.setNome("Silas");
 		f1.setCpfCnpj("12205098112");
 		f1.setEmail("silascarv@gmail.com");
@@ -182,5 +183,6 @@ public class ChoperiaApplication implements CommandLineRunner {
 		
 		ordemServicoRepo.save(os);
 		
+		System.out.println(funcionarioRepo.findByEmail("silascarv@gmail.com"));
 	}
 }

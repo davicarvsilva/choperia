@@ -4,12 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.validation.ConstraintViolationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.davicarv.choperia.domain.Funcionario;
-import com.davicarv.choperia.domain.Pessoa;
+import com.davicarv.choperia.domain.Permissao;
 import com.davicarv.choperia.exception.NotFoundException;
 import com.davicarv.choperia.repository.FuncionarioRepository;
 
@@ -33,6 +34,7 @@ public class FuncionarioService {
 
 	public Funcionario save(Funcionario b) {
 		verificaEmailCadastrado(b.getEmail());
+		removePermissoesNulas(b);
 		
 		try {
 			
@@ -63,6 +65,8 @@ public class FuncionarioService {
 		Funcionario obj = findById(funcionario.getId());
 		// Verifica alteração de senha
 		alterarSenha(obj, senhaAtual, novaSenha, confirmarNovaSenha);
+		
+		removePermissoesNulas(funcionario);
 
 		try {
 			funcionario.setCpfCnpj(obj.getCpfCnpj());
@@ -99,6 +103,16 @@ public class FuncionarioService {
 		Funcionario funcionario = repo.findByEmail(email);
 		if(funcionario == null) {
 			throw new RuntimeException("Email já cadastrado");
+		}
+	}
+	
+	public void removePermissoesNulas(Funcionario f) {
+		f.getPermissoes().removeIf((Permissao p)->{
+			return p.getId() == null;
+		});
+		
+		if(f.getPermissoes().isEmpty()) {
+			throw new RuntimeException("Funcionário deve conter no mínimo uma permissão");
 		}
 	}
 }
