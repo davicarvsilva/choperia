@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.davicarv.choperia.domain.Barril;
 import com.davicarv.choperia.domain.Cliente;
@@ -16,15 +17,16 @@ import com.davicarv.choperia.domain.Equipamento;
 import com.davicarv.choperia.domain.Funcionario;
 import com.davicarv.choperia.domain.MarcaBarrilEnum;
 import com.davicarv.choperia.domain.OrdemServico;
+import com.davicarv.choperia.domain.Permissao;
 import com.davicarv.choperia.domain.StatusEquipamentoEnum;
 import com.davicarv.choperia.domain.StatusOrdemServico;
 import com.davicarv.choperia.domain.Telefone;
-import com.davicarv.choperia.domain.TipoPessoa;
 import com.davicarv.choperia.repository.BarrilRepository;
 import com.davicarv.choperia.repository.ClienteRepository;
 import com.davicarv.choperia.repository.EquipamentoRepository;
 import com.davicarv.choperia.repository.FuncionarioRepository;
 import com.davicarv.choperia.repository.OrdemServicoRepository;
+import com.davicarv.choperia.repository.PermissaoRepository;
 
 @SpringBootApplication
 public class ChoperiaApplication implements CommandLineRunner {
@@ -39,13 +41,24 @@ public class ChoperiaApplication implements CommandLineRunner {
 	private EquipamentoRepository equipamentoRepo;
 	@Autowired
 	private OrdemServicoRepository ordemServicoRepo;
-
+	@Autowired
+	private PermissaoRepository permissaoRepo;
+	
+	
 	public static void main(String[] args) {
 		SpringApplication.run(ChoperiaApplication.class, args);
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
+		
+		// Permissões
+		Permissao p1 = new Permissao();
+		p1.setNome("ADMIN");
+		
+		Permissao p2 = new Permissao();
+		p1.setNome("FUNC");
+		permissaoRepo.saveAll(List.of(p1, p2));
 		
 		// Cliente
 		Cliente c1 = new Cliente();
@@ -98,6 +111,7 @@ public class ChoperiaApplication implements CommandLineRunner {
 		
 		// Funcionario
 		Funcionario f1 = new Funcionario();
+		f1.setPermissoes(List.of(p1));
 		f1.setNome("Silas");
 		f1.setCpfCnpj("12205098112");
 		f1.setEmail("silascarv@gmail.com");
@@ -125,7 +139,7 @@ public class ChoperiaApplication implements CommandLineRunner {
 		f1.setEnderecos(enderecosCliente2);
 		f1.setDataNascimento(dataNascimentoCliente2);
 		f1.setTelefones(telefonesCliente2);
-		f1.setSenha("123");
+		f1.setSenha(new BCryptPasswordEncoder().encode("12345678"));
 		f1.setCargo("Entregador");
 		f1.setSalario(1500);
 		funcionarioRepo.save(f1);
